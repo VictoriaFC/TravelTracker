@@ -7,4 +7,4 @@ class Traveler {
 
 }
 
-"id":1,"name":"Ham Leadbeater","travelerType":"relaxer"
+export default Traveler;

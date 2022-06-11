@@ -17,3 +17,5 @@ describe('Traveler', function() {
     expect(newTraveler).to.instanceOf(Traveler);
   });
 });
+
+
