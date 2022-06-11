@@ -40,24 +40,33 @@ body {
   align-items: center;
 }
 
+.button-section {
+  display: flex;
+  flex-direction: row;
+}
+
 .dashboard-container {
   border: 1px solid pink;
   width: 90%;
   height: 90%;
   display: flex;
   flex-direction: row;
-  justify-content:space-between;
   align-items: center;
 }
 
 .trips-data-section {
   border: 1px solid aqua;
   width: 70%;
-  height: 90%;
+  height: 100%;
 }
 
 .new-trips-section {
   border: 1px solid orange;
   width: 30%;
-  height: 90%;
+  height: 100%;
+}
+
+.trip-button {
+  border: 1px solid black;
+  border-radius: 3px;
 }
