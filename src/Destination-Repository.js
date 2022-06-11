@@ -1,0 +1,1 @@
+import Destination from '../src/Destination';
