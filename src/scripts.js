@@ -9,3 +9,9 @@ import './images/turing-logo.png'
 
 
 console.log('This is the JavaScript entry file - your code begins here.');
+
+
+// ****** fetch GET ******
+function loadData() {
+	Promise.all([getData('travelers'), getData('trips'), getData('destinations')])
+} 
