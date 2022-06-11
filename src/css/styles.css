@@ -1,3 +1,72 @@
 body {
-  background: radial-gradient(circle, rgba(63,94,251,1) 0%, rgba(252,70,107,1) 100%);
+  border: 1px solid purple;
+  background: white;
+  height: 675px;
+}
+
+.header-container {
+  border: 1px solid green;
+  height: 10%;
+  margin-left: 10px;
+  margin-right: 10px;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.logo {
+  width: 50px;
+  height: 50px;
+}
+
+.main-container {
+  border: 2px solid blue;
+  height: 90%;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: center;
+}
+
+.dashboard-nav {
+  border: 1px solid seagreen;
+  width: 90%;
+  height: 10%;
+  margin: 10px;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.button-section {
+  display: flex;
+  flex-direction: row;
+}
+
+.dashboard-container {
+  border: 1px solid pink;
+  width: 90%;
+  height: 90%;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+}
+
+.trips-data-section {
+  border: 1px solid aqua;
+  width: 70%;
+  height: 100%;
+}
+
+.new-trips-section {
+  border: 1px solid orange;
+  width: 30%;
+  height: 100%;
+}
+
+.trip-button {
+  border: 1px solid black;
+  border-radius: 3px;
 }
