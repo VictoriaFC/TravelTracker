@@ -1,8 +1,8 @@
 import Destination from './Destination';
 
 class DestinationRepository {
-    constructor() {
-
+    constructor(destinationData) {
+			this.destinations = destinationData.map((destinationObj) => { return new Destination(destinationObj) });
     }
 }
 
