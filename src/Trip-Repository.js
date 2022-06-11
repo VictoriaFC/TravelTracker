@@ -1,1 +1,0 @@
-import Trip from './Trip';
