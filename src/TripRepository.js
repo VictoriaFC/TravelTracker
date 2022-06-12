@@ -48,13 +48,16 @@ class TripRepository {
 			return trip.date.getFullYear() === now.getFullYear() && travelerID === trip.userID;
 		})
 		const yearlyTotal = tripsForYear.reduce((sum, trip) => {
-			const tripDestination = destinationRepo.findById(trip.destinationID)
-			const totalLodgingCost = tripDestination.lodgingCost * trip.duration * trip.travelers
-			const totalFlightCost = tripDestination.flightCost * trip.travelers
-			sum += (totalLodgingCost + totalFlightCost) * 0.9
-			return sum
+			return sum + trip.calculateCost(destinationRepo)
 		}, 0)
 		return yearlyTotal
+	}
+
+	findHightestTripId() {
+	 const sortTrips = this.trips.sort((a, b) => {
+			return b.id - a.id
+		})
+		return sortTrips[0].id;
 	}
 }
 
