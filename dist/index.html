@@ -67,13 +67,13 @@
 			</section>
 			<section class="new-trips-container">
 				<aside class="new-trips-form-section">NEW TRIPS
-					<form class="new-trip-input-form" id="newTripSubmitButton">
+					<form class="new-trip-input-form" id="newTripSubmitButton" method="post">
 						<label for="date">Select the Date</label><br>
-						<input type="date" id="tripStartDate" required><br>
+						<input type="date" id="dateField" required><br>
 						<label for="number">Duration</label><br>
 						<input type ="number" placeholder="Enter Duration" class="input-text" id="durationField" required><br><br><br>
 						<label for="number">Number of Travelers</label><br>
-						<input type ="number" placeholder="Enter Number of Travelers" class="input-text" id="numberOfTravelersField" required><br><br><br>
+						<input type ="number" placeholder="Enter Number of Travelers" class="input-text" id="travelersField" required><br><br><br>
 						<label for="destination">Destination</label><br>
 						<select name="Destination" class="destination-dropdown" id="destinationDropdown">
 							<option disabled selected hidden>Select a Destination</option>
