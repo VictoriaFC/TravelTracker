@@ -40,11 +40,6 @@ var upcomingTripsButton = document.getElementById('upcomingTrips');
 var presentTripsButton = document.getElementById('presentTrips');
 var pastTripsButton = document.getElementById('pastTrips');
 var pendingTripsButton = document.getElementById('pendingTrips');
-// var allTripsData = document.getElementById('allTripsData');
-// var upcomingTripsData = document.getElementById('upcomingTripsData');
-// var presentTripsData = document.getElementById('presentTripsData');
-// var pastTripsData = document.getElementById('pastTripsData');
-// var pendingTripsData = document.getElementById('pendingTripData');
 
 // ****** event listener ******
 
