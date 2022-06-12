@@ -121,6 +121,12 @@ body {
 	justify-content: space-between;
 }
 
+.trip-attr {
+	display: flex;
+	justify-content: flex-end;
+	align-items: center;
+}
+
 .trip-image {
 	height: 100%;
 }

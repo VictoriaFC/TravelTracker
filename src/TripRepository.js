@@ -13,33 +13,48 @@ class TripRepository {
 		return this.trips.sort((a, b) => b.date - a.date);
 	}
 
-	getAllTrips(userID) {
-		return this.sortDatesDescending().filter(trip => trip.userID === userID);
+	getAllTrips(travelerID) {
+		return this.sortDatesDescending().filter(trip => trip.userID === travelerID);
 	}
 
-	getUpcomingTrips(userID) {
+	getUpcomingTrips(travelerID) {
 		return this.sortDatesAscending().filter((trip) => {
-			return trip.date > Date.now() && userID === trip.userID;
+			return trip.date > Date.now() && travelerID === trip.userID;
 		})
 	}
 
-	getPresentTrips(userID) {
+	getPresentTrips(travelerID) {
 		const now = Date.now()
 		return this.sortDatesAscending().filter((trip) => {
-			return now >= trip.date && now <= trip.getEndDate() && userID === trip.userID;
+			return now >= trip.date && now <= trip.getEndDate() && travelerID === trip.userID;
 		})
 	}
 
-	getPastTrips(userID) {
+	getPastTrips(travelerID) {
 		return this.sortDatesAscending().filter((trip) => {
-			return trip.date < Date.now() && userID === trip.userID;
+			return trip.date < Date.now() && travelerID === trip.userID;
 		})
 	}
 
-	getPendingTrips(userID) {
+	getPendingTrips(travelerID) {
 		return this.sortDatesDescending().filter((trip) => {
-			return trip.status.includes('pending') && userID === trip.userID;
+			return trip.status.includes('pending') && travelerID === trip.userID;
 		})
+	}
+
+	calculateTotalTravelCostForYear(destinationRepo, travelerID) {
+		const now = new Date()
+		const tripsForYear = this.trips.filter((trip) => {
+			return trip.date.getFullYear() === now.getFullYear() && travelerID === trip.userID;
+		})
+		const yearlyTotal = tripsForYear.reduce((sum, trip) => {
+			const tripDestination = destinationRepo.findById(trip.destinationID)
+			const totalLodgingCost = tripDestination.lodgingCost * trip.duration * trip.travelers
+			const totalFlightCost = tripDestination.flightCost * trip.travelers
+			sum += (totalLodgingCost + totalFlightCost) * 0.9
+			return sum
+		}, 0)
+		return yearlyTotal
 	}
 }
 

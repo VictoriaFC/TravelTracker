@@ -42,6 +42,7 @@ function loadData(fetchRequests) {
 		displayPresentTrips();
 		displayPastTrips();
 		displayPendingTrips();
+		displayTotalSpentPerYear();
 	})
 } 
 
@@ -137,4 +138,11 @@ const generateTripDomElement = (trip) => {
       <div class="trip-travelers trip-attr">${trip.travelers} travelers</div>
     </li>
   `
+}
+
+const displayTotalSpentPerYear = () => {
+	const now = new Date()
+	const totalCost = tripRepo.calculateTotalTravelCostForYear(destinationRepo, traveler.id)
+	const totalCostField = document.getElementById('totalSpentPerYear');
+	totalCostField.innerText = `Total Spent on Travel in ${now.getFullYear()}: $${totalCost}`
 }
