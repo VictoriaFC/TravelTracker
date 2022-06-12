@@ -16,6 +16,19 @@ let travelerRepo;
 let tripRepo;
 let destinationRepo;
 
+// ****** querySelectors ******
+var allTripsButton = document.getElementById('allTripsButton');
+var upcomingTripsButton = document.getElementById('upcomingTripsButton');
+var presentTripsButton = document.getElementById('presentTripsButton');
+var pastTripsButton = document.getElementById('pastTripsButton');
+var pendingTripsButton = document.getElementById('pendingTripsButton');
+var allTripsData = document.getElementById('allTripsData')
+var upcomingTripsData = document.getElementById('upcomingTripsData');
+var presentTripsData = document.getElementById('presentTripsData');
+var pastTripsData = document.getElementById('pastTripsData');
+var pendingTripsData = document.getElementById('pendingTripsData');
+
+
 // ****** fetch GET ******
 function loadData(fetchRequests) {
 	Promise.all(fetchRequests)
@@ -34,48 +47,86 @@ function loadData(fetchRequests) {
 
 loadData([fetchAll('travelers'), fetchAll('trips'), fetchAll('destinations')]);
 
-// ****** querySelectors ******
-var allTripsButton = document.getElementById('allTrips');
-var upcomingTripsButton = document.getElementById('upcomingTrips');
-var presentTripsButton = document.getElementById('presentTrips');
-var pastTripsButton = document.getElementById('pastTrips');
-var pendingTripsButton = document.getElementById('pendingTrips');
+const showAllTrips = () => {
+	allTripsData.classList.remove('hidden');
+	upcomingTripsData.classList.add('hidden');
+	presentTripsData.classList.add('hidden');
+	pastTripsData.classList.add('hidden');
+	pendingTripsData.classList.add('hidden');
+}
 
-// ****** event listener ******
-
-
-
+allTripsButton.addEventListener('click', showAllTrips);
 
 const displayAllTrips = () => {
-var allTripsData = document.getElementById('allTripsData');
+// allTripsData = document.getElementById('allTripsData');
 tripRepo.getAllTrips(traveler.id).forEach((trip) => {
 	allTripsData.innerHTML += generateTripDomElement(trip);
 })
 }
 
-const displayUpcomingTrips = () => {
-	var upcomingTripsData = document.getElementById('upcomingTripsData');
-	tripRepo.getUpcomingTrips(traveler.id).forEach((trip) => {
-		upcomingTripsData.innerHTML += generateTripDomElement(trip);
-	})
+const showUpcomingTrips = () => {
+	upcomingTripsData.classList.remove('hidden');
+	allTripsData.classList.add('hidden');
+	presentTripsData.classList.add('hidden');
+	pastTripsData.classList.add('hidden');
+	pendingTripsData.classList.add('hidden');
 }
 
+upcomingTripsButton.addEventListener('click', showUpcomingTrips);
+
+const displayUpcomingTrips = () => {
+	// upcomingTripsData = document.getElementById('upcomingTripsData');
+	tripRepo.getUpcomingTrips(traveler.id).forEach((trip) => {
+		upcomingTripsData.innerHTML += generateTripDomElement(trip);
+	})	
+}
+
+const showPresentTrips = () => {
+	upcomingTripsData.classList.add('hidden');
+	allTripsData.classList.add('hidden');
+	presentTripsData.classList.remove('hidden');
+	pastTripsData.classList.add('hidden');
+	pendingTripsData.classList.add('hidden');
+}
+
+presentTripsButton.addEventListener('click', showPresentTrips);
+
 const displayPresentTrips = () => {
-	var presentTripsData = document.getElementById('presentTripsData');
+	// var presentTripsData = document.getElementById('presentTripsData');
 	tripRepo.getPresentTrips(traveler.id).forEach((trip) => {
 		presentTripsData.innerHTML += generateTripDomElement(trip);
 	})
 }
 
+const showPastTrips = () => {
+	upcomingTripsData.classList.add('hidden');
+	allTripsData.classList.add('hidden');
+	presentTripsData.classList.add('hidden');
+	pastTripsData.classList.remove('hidden');
+	pendingTripsData.classList.add('hidden');
+}
+
+pastTripsButton.addEventListener('click', showPastTrips);
+
 const displayPastTrips = () => {
-	var pastTripsData = document.getElementById('pastTripsData');
+	// var pastTripsData = document.getElementById('pastTripsData');
 	tripRepo.getPastTrips(traveler.id).forEach((trip) => {
 		pastTripsData.innerHTML += generateTripDomElement(trip);
 	})
 }
 
+const showPendingTrips = () => {
+	upcomingTripsData.classList.add('hidden');
+	allTripsData.classList.add('hidden');
+	presentTripsData.classList.add('hidden');
+	pastTripsData.classList.add('hidden');
+	pendingTripsData.classList.remove('hidden');
+}
+
+pendingTripsButton.addEventListener('click', showPendingTrips);
+
 const displayPendingTrips = () => {
-	var pendingTripsData = document.getElementById('pendingTripsData');
+	// var pendingTripsData = document.getElementById('pendingTripsData');
 	tripRepo.getPendingTrips(traveler.id).forEach((trip) => {
 		pendingTripsData.innerHTML += generateTripDomElement(trip);
 	})
