@@ -43,6 +43,7 @@ function loadData(fetchRequests) {
 		displayPastTrips();
 		displayPendingTrips();
 		displayTotalSpentPerYear();
+		displayDestinationDropdown(destinationRepo.destinations);
 	})
 } 
 
@@ -145,4 +146,12 @@ const displayTotalSpentPerYear = () => {
 	const totalCost = tripRepo.calculateTotalTravelCostForYear(destinationRepo, traveler.id)
 	const totalCostField = document.getElementById('totalSpentPerYear');
 	totalCostField.innerText = `Total Spent on Travel in ${now.getFullYear()}: $${totalCost}`
+}
+
+function displayDestinationDropdown(destinations) {
+	let destinationDropdown = document.getElementById('destinationDropdown');
+	destinations.forEach(destination => {
+			let newOption = new Option(destination.destination, destination.id)
+			destinationDropdown.appendChild(newOption);
+	});
 }
