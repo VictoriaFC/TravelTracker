@@ -7,7 +7,7 @@ class TravelerRepository {
 
 	randomTraveler() {
 		let randomId = Math.floor(Math.random() * this.travelers.length);
-		this.travelers.find((traveler) => traveler.id === randomId)
+		return this.travelers.find((traveler) => traveler.id === randomId)
 	}
 }
 
