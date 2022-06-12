@@ -58,7 +58,6 @@ const showAllTrips = () => {
 allTripsButton.addEventListener('click', showAllTrips);
 
 const displayAllTrips = () => {
-// allTripsData = document.getElementById('allTripsData');
 tripRepo.getAllTrips(traveler.id).forEach((trip) => {
 	allTripsData.innerHTML += generateTripDomElement(trip);
 })
@@ -75,7 +74,6 @@ const showUpcomingTrips = () => {
 upcomingTripsButton.addEventListener('click', showUpcomingTrips);
 
 const displayUpcomingTrips = () => {
-	// upcomingTripsData = document.getElementById('upcomingTripsData');
 	tripRepo.getUpcomingTrips(traveler.id).forEach((trip) => {
 		upcomingTripsData.innerHTML += generateTripDomElement(trip);
 	})	
@@ -92,7 +90,6 @@ const showPresentTrips = () => {
 presentTripsButton.addEventListener('click', showPresentTrips);
 
 const displayPresentTrips = () => {
-	// var presentTripsData = document.getElementById('presentTripsData');
 	tripRepo.getPresentTrips(traveler.id).forEach((trip) => {
 		presentTripsData.innerHTML += generateTripDomElement(trip);
 	})
@@ -109,7 +106,6 @@ const showPastTrips = () => {
 pastTripsButton.addEventListener('click', showPastTrips);
 
 const displayPastTrips = () => {
-	// var pastTripsData = document.getElementById('pastTripsData');
 	tripRepo.getPastTrips(traveler.id).forEach((trip) => {
 		pastTripsData.innerHTML += generateTripDomElement(trip);
 	})
@@ -126,7 +122,6 @@ const showPendingTrips = () => {
 pendingTripsButton.addEventListener('click', showPendingTrips);
 
 const displayPendingTrips = () => {
-	// var pendingTripsData = document.getElementById('pendingTripsData');
 	tripRepo.getPendingTrips(traveler.id).forEach((trip) => {
 		pendingTripsData.innerHTML += generateTripDomElement(trip);
 	})
