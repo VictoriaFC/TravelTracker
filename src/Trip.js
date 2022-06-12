@@ -4,7 +4,7 @@ class Trip {
         this.userID = tripData.userID;
         this.destinationID = tripData.destinationID;
         this.travelers = tripData.travelers;
-        this.date = tripData.date;
+        this.date = new Date(tripData.date);
         this.duration = tripData.duration;
         this.status = tripData.status;
         this.suggestedActivities = tripData.suggestedActivities;

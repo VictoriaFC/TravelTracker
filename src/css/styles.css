@@ -48,10 +48,11 @@ body {
 .dashboard-container {
   border: 1px solid pink;
   width: 90%;
-  height: 90%;
+  height: 100%;
   display: flex;
   flex-direction: row;
   align-items: center;
+	overflow: scroll;
 }
 
 .trips-data-section {
@@ -69,4 +70,24 @@ body {
 .trip-button {
   border: 1px solid black;
   border-radius: 3px;
+}
+
+.trips-data-section {
+	display: flex;
+	flex-direction: column;
+}
+
+.trip-row {
+	width: 100%;
+	height: 60px;
+	display: flex;
+	justify-content: space-between;
+}
+
+.trip-image {
+	height: 100%;
+}
+
+.hidden {
+  display: none;
 }
