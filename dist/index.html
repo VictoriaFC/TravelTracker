@@ -11,7 +11,7 @@
   <title>Travel via Victoria</title>
 </head>
 <body>
-	<main class="login-page hidden">
+	<main class="login-page" id="loginPage">
 		<header class="header-container">
 			<img class="logo" src="./images/viaVictoria.jpg" alt="travel via victoria logo">
 		</header>
@@ -23,14 +23,14 @@
 				<label for="psw">Password
 					<input type="password" placeholder="Enter Password" name="psw" required>
 				</label>
-				<button type="submit">Login</button>
+				<button type="submit" class="login-button" id="loginButton">Login</button>
 			</form>
 		</section>
 	</main>
-	<main class="traveler-page">
+	<main class="traveler-page hidden" id="travelerPage">
 		<header class="header-container">
 			<img class="logo" src="./images/viaVictoria.jpg" alt="travel via victoria logo">
-			<button class="sign-out-button">Sign Out</button>
+			<button class="sign-out-button" id="signOutButton">Sign Out</button>
 		</header>
 		<main class="main-container"> 
 			<section class="dashboard-nav">

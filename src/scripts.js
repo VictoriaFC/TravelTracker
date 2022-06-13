@@ -18,29 +18,57 @@ let tripRepo;
 let destinationRepo;
 
 // ****** querySelectors ******
+var loginButton = document.getElementById('loginButton');
+var signOutButton = document.getElementById('signOutButton');
+var loginMainPage = document.getElementById('loginPage');
+var travelerMainPage = document.getElementById('travelerPage');
+
 var allTripsButton = document.getElementById('allTripsButton');
 var upcomingTripsButton = document.getElementById('upcomingTripsButton');
 var presentTripsButton = document.getElementById('presentTripsButton');
 var pastTripsButton = document.getElementById('pastTripsButton');
 var pendingTripsButton = document.getElementById('pendingTripsButton');
+var newTripSubmitButton = document.getElementById('newTripSubmitButton')
+
 var allTripsData = document.getElementById('allTripsData')
 var upcomingTripsData = document.getElementById('upcomingTripsData');
 var presentTripsData = document.getElementById('presentTripsData');
 var pastTripsData = document.getElementById('pastTripsData');
 var pendingTripsData = document.getElementById('pendingTripsData');
-var newTripSubmitButton = document.getElementById('newTripSubmitButton')
 
 window.addEventListener("load", () => {
 	loadData([fetchAll('travelers'), fetchAll('trips'), fetchAll('destinations')])
 
-	newTripSubmitButton.addEventListener('submit', postNewTrip)	
-	newTripSubmitButton.addEventListener('change', displayTripEstimate)
+	loginButton.addEventListener('click', showTravelerPage);
+	signOutButton.addEventListener('click', showLoginPage);
+
+
+	newTripSubmitButton.addEventListener('submit', postNewTrip);
+	newTripSubmitButton.addEventListener('change', displayTripEstimate);
 	allTripsButton.addEventListener('click', showAllTrips);
 	upcomingTripsButton.addEventListener('click', showUpcomingTrips);
 	pastTripsButton.addEventListener('click', showPastTrips);
 	presentTripsButton.addEventListener('click', showPresentTrips);
 	pendingTripsButton.addEventListener('click', showPendingTrips);
 })
+
+// function letUserLogin() {
+// 	if (travelerRepo)
+// }
+
+// function letTravelerLogOut() {
+
+// }
+
+function showTravelerPage() {
+	travelerMainPage.classList.remove('hidden')
+	loginMainPage.classList.add('hidden')
+}
+
+function showLoginPage() {
+	travelerMainPage.classList.add('hidden')
+	loginMainPage.classList.remove('hidden')
+}
 
 // ****** fetch GET ******
 function loadData(fetchRequests, loadTraveler = true) {
