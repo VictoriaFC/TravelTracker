@@ -2,7 +2,7 @@
 // Do not delete or rename this file ********
 import './css/styles.css';
 import './images/turing-logo.png'
-import './images/viaVictoria.png'
+import './images/viaVictoria.jpg'
 import TravelerRepository from './TravelerRepository';
 import TripRepository from './TripRepository';
 import DestinationRepository from './DestinationRepository';
@@ -192,6 +192,39 @@ function postNewTrip(e) {
 	postData('http://localhost:3001/api/v1/trips', newTripData).then(json => {
 		loadData([fetchAll('travelers'), fetchAll('trips'), fetchAll('destinations')], false);
 	})
+}
+
+newTripSubmitButton.addEventListener('change', displayTripEstimate)
+
+function displayTripEstimate() {
+	var tripDate = document.getElementById('dateField').value;
+	var splitDate = tripDate.split('-')
+	var formattedDate = splitDate.join('/')
+	var tripDuration = document.getElementById('durationField').value;
+	var tripTravelers = document.getElementById('travelersField').value;
+	var tripDestination = document.getElementById('destinationDropdown').value;
+	var newId = tripRepo.findHightestTripId() + 1;
+	var travelerId = traveler.id;
+	const newTripData = {
+		id: newId,
+		userID: travelerId,
+		destinationID: parseInt(tripDestination),
+		travelers: parseInt(tripTravelers),
+		date: formattedDate,
+		duration: tripDuration,
+		status: 'pending',
+		suggestedActivities: []
+	};
+	console.log(newTripData)
+	
+	const checkItOut = Object.values(newTripData)
+	if (checkItOut.includes('') || checkItOut.includes(NaN)) {
+		return
+	}
+
+	const newTrip = new Trip(newTripData)
+	const estimatedCost = newTrip.calculateCost(destinationRepo)
+	tripEstimate.innerHTML = `Your Trip Estimate is: ${estimatedCost}`
 }
 
 function clearForm() {

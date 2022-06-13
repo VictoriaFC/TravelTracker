@@ -1,14 +1,12 @@
 body {
-  border: 1px solid purple;
+  /* border: 1px solid purple; */
   background: white;
   height: 675px;
 }
 
 .header-container {
-  border: 1px solid green;
-  height: 15%;
-  margin-left: 10px;
-  margin-right: 10px;
+  background-color: #9A5D41;
+  height: 20%;
   display: flex;
   flex-direction: row;
   justify-content: space-between;
@@ -16,12 +14,11 @@ body {
 }
 
 .logo {
-  width: 200px;
-  height: 200px;
+ width: 300px;
 }
 
 .main-container {
-  border: 2px solid blue;
+  /* border: 2px solid blue; */
   height: 90%;
   display: flex;
   flex-direction: column;
@@ -30,7 +27,7 @@ body {
 }
 
 .dashboard-nav {
-  border: 1px solid seagreen;
+  /* border: 1px solid seagreen; */
   width: 90%;
   height: 10%;
   margin: 10px;
@@ -52,18 +49,19 @@ body {
 }
 
 .dashboard-container {
-  border: 1px solid pink;
+  /* border: 1px solid pink; */
   width: 90%;
   height: 100%;
   display: flex;
   flex-direction: row;
+	justify-content: space-between;
   align-items: center;
 }
 
 .trips-container {
-	border: 1px solid purple;
+	border: 1px solid #9A5D41;
 	width: 70%;
-	height: 100%;
+	height: 90%;
 	display: flex;
   flex-direction: column;
   align-items: center;
@@ -71,7 +69,7 @@ body {
 }
 
 .trips-data-section {
-  border: 1px solid aqua;
+  /* border: 1px solid aqua; */
   width: 95%;
   height: 100%;
 	margin-top: 0px;
@@ -82,18 +80,30 @@ body {
 
 .new-trips-container {
   border: 1px solid orange;
-  width: 30%;
-  height: 100%;
+  width: 25%;
+  height: 90%;
 	display: flex;
 	justify-content: center;
 }
 
 .new-trips-form-section {
-  border: 1px solid yellow;
+  /* border: 1px solid black; */
   width: 80%;
-  height: 100%;
+  height: 80%;
 	display: flex;
+	flex-direction: column;
 	justify-content: center;
+}
+
+.new-trip-input-form {
+	/* border: 1px solid black; */
+}
+
+.trip-estimate {
+	border: 1px solid black;
+	width: 100%;
+	height: 50%;
+	margin-top: 20px;
 }
 
 .trip-button {

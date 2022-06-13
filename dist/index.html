@@ -8,17 +8,17 @@
 </head>
 <body>
   <nav class="header-container">
-    <img class="logo" src="./images/viaVictoria.png" alt="turing logo">
+    <img class="logo" src="./images/viaVictoria.jpg" alt="turing logo">
     <button class="sign-out-button">Sign Out</button>
   </nav>
   <main class="main-container"> 
     <nav class="dashboard-nav">
       <section class="button-section">
-        <button class="trip-button" id="allTripsButton" alt="all trips button">ALL</button>
-        <button class="trip-button" id="upcomingTripsButton" alt="upcoming trips button">Upcoming</button>
-        <button class="trip-button" id="presentTripsButton" alt="present trips button">Present</button>
-        <button class="trip-button" id="pastTripsButton" alt="past trips button">Past</button>
-        <button class="trip-button" id="pendingTripsButton" alt="pending trips button">Pending</button>
+        <button class="trip-button" id="allTripsButton" alt="all trips button">ALL TRIPS</button>
+        <button class="trip-button" id="upcomingTripsButton" alt="upcoming trips button">UPCOMING</button>
+        <button class="trip-button" id="presentTripsButton" alt="present trips button">PRESENT</button>
+        <button class="trip-button" id="pastTripsButton" alt="past trips button">PAST</button>
+        <button class="trip-button" id="pendingTripsButton" alt="pending trips button">PENDING</button>
       </section>
       <section class="total-spent-section" id="totalSpentPerYear"></section>
     </nav>
@@ -66,7 +66,8 @@
 				</ul>
 			</section>
 			<section class="new-trips-container">
-				<aside class="new-trips-form-section">NEW TRIPS
+				<aside class="new-trips-form-section">
+					<h1>Want to take another trip?</h1>
 					<form class="new-trip-input-form" id="newTripSubmitButton" method="post">
 						<label for="date">Select the Date</label><br>
 						<input type="date" id="dateField" required><br>
@@ -80,7 +81,7 @@
 						</select>
 						<input type="submit" value="Submit" class="submit-button">
 					</form>
-					<section class="trip-estimate" id="tripEstimate">Trip Estimate</section>
+					<section class="trip-estimate" id="tripEstimate"></section>
 				</aside>
     	</section>
 	</section>
