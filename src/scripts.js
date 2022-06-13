@@ -232,5 +232,5 @@ function clearForm() {
 	document.getElementById('dateField').value = '';
 	document.getElementById('durationField').value = '';
 	document.getElementById('travelersField').value = '';
-	document.getElementById('destinationDropdown').value = '';
+	document.getElementById('destinationDropdown').selectedIndex = 0;
 }
