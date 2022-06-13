@@ -1,5 +1,6 @@
 import chai from 'chai';
 import Trip from '../src/Trip';
+import Destination from '../src/Destination'
 const expect = chai.expect;
 
 describe('Trip', function() {
@@ -54,8 +55,8 @@ describe('Trip', function() {
     expect(newTrip2.travelers).to.equal(5);
   })
   it('should have a travel date', function () {
-    expect(newTrip.date).to.equal("2022/09/16");
-    expect(newTrip2.date).to.equal("2022/10/04");
+    expect(newTrip.date.toLocaleDateString()).to.equal("9/16/2022");
+    expect(newTrip2.date.toLocaleDateString()).to.equal("10/4/2022");
   })
   it('should have a travel duration', function () {
     expect(newTrip.duration).to.equal(8);
@@ -69,4 +70,12 @@ describe('Trip', function() {
     expect(newTrip.suggestedActivities).to.deep.equal([]);
     expect(newTrip2.suggestedActivities).to.deep.equal([]);
   })
+	it('should be able to get a trip end date', function () {
+		expect(newTrip.getEndDate(tripData).toLocaleDateString()).to.equal('9/24/2022');
+		expect(newTrip2.getEndDate(tripData2).toLocaleDateString()).to.equal('10/22/2022');
+	})
+	it.skip('should be able to calculate the trip cost', function () {
+		expect(newTrip.calculateCost()).to.equal();
+		expect(newTrip.calculateCost()).to.equal();
+	})
 });
