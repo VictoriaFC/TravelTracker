@@ -43,12 +43,12 @@ describe('Destination', function() {
     expect(newDestination2.destination).to.equal('Stockholm, Sweden');
   })
   it('should have an estimated lodging cost per day', function () {
-    expect(newDestination.estimatedLodgingCostPerDay).to.equal(70);
-    expect(newDestination2.estimatedLodgingCostPerDay).to.equal(100);
+    expect(newDestination.lodgingCost).to.equal(70);
+    expect(newDestination2.lodgingCost).to.equal(100);
   })
   it('should have an estimated flight cost per person', function () {
-    expect(newDestination.estimatedFlightCostPerPerson).to.equal(400);
-    expect(newDestination2.estimatedFlightCostPerPerson).to.equal(780);
+    expect(newDestination.flightCost).to.equal(400);
+    expect(newDestination2.flightCost).to.equal(780);
   })
   it('should have a destination image', function () {
     expect(newDestination.image.url).to.equal('https://images.unsplash.com/photo-1489171084589-9b5031ebcf9b?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=2089&q=80')

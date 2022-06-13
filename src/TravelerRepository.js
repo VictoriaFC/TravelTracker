@@ -9,6 +9,11 @@ class TravelerRepository {
 		let randomId = Math.ceil(Math.random() * this.travelers.length);
 		return this.travelers.find((traveler) => traveler.id === randomId)
 	}
+
+	findById() {
+		// username is traveler + Number
+		// password is traveler
+	}
 }
 
 export default TravelerRepository;
