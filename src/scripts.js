@@ -156,7 +156,7 @@ const displayTotalSpentPerYear = () => {
 	const now = new Date()
 	const totalCost = tripRepo.calculateTotalTravelCostForYear(destinationRepo, traveler.id)
 	const totalCostField = document.getElementById('totalSpentPerYear');
-	totalCostField.innerText = `Total Spent on Travel in ${now.getFullYear()}: $${totalCost}`
+	totalCostField.innerText = `Total Spent on Travel in ${now.getFullYear()}: \n$${totalCost.toFixed(2)}`
 }
 
 function displayDestinationDropdown(destinations) {
@@ -175,6 +175,7 @@ function postNewTrip(e) {
 	var tripDuration = document.getElementById('durationField').value;
 	var tripTravelers = document.getElementById('travelersField').value;
 	var tripDestination = document.getElementById('destinationDropdown').value;
+	console.log(tripDestination)
 	var newId = tripRepo.findHightestTripId() + 1;
 	var travelerId = traveler.id;
 	clearForm();
@@ -224,7 +225,7 @@ function displayTripEstimate() {
 
 	const newTrip = new Trip(newTripData)
 	const estimatedCost = newTrip.calculateCost(destinationRepo)
-	tripEstimate.innerHTML = `Your Trip Estimate is: ${estimatedCost}`
+	tripEstimate.innerHTML = `Your Trip Estimate is: $${estimatedCost.toFixed(2)}`
 }
 
 function clearForm() {

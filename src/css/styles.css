@@ -7,6 +7,7 @@ body {
 .header-container {
   background-color: #9A5D41;
   height: 20%;
+	padding-right: 20px;
   display: flex;
   flex-direction: row;
   justify-content: space-between;
@@ -30,11 +31,10 @@ body {
   /* border: 1px solid seagreen; */
   width: 90%;
   height: 10%;
-  margin: 10px;
   display: flex;
   flex-direction: row;
   justify-content: space-between;
-  align-items: center;
+  align-items: flex-end;
 }
 
 .button-section {
@@ -43,15 +43,23 @@ body {
 }
 
 .total-spent-section {
+	background-color: #9a5d41cd;
+	color: rgb(240, 240, 240);
 	border: 1px solid gray;
-	padding-right: 50px;
-	padding-left: 50px;
+	width: 318px;
+	height: 45px;
+	text-align: center;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+
 }
 
 .dashboard-container {
   /* border: 1px solid pink; */
   width: 90%;
   height: 100%;
+	margin-top: 0;
   display: flex;
   flex-direction: row;
 	justify-content: space-between;
@@ -89,21 +97,22 @@ body {
 .new-trips-form-section {
   /* border: 1px solid black; */
   width: 80%;
-  height: 80%;
+  height: 100%;
 	display: flex;
 	flex-direction: column;
 	justify-content: center;
 }
 
-.new-trip-input-form {
-	/* border: 1px solid black; */
-}
-
 .trip-estimate {
-	border: 1px solid black;
+	background-color: #9a5d41cd;
+	color: white;
 	width: 100%;
-	height: 50%;
+	height: 70px;
 	margin-top: 20px;
+	text-align: center;
+	display: flex;
+	justify-content: center;
+	align-items: center;
 }
 
 .trip-button {
@@ -144,3 +153,21 @@ body {
 .hidden {
   display: none;
 }
+
+.input-text, 
+.form-calendar-field {
+	text-align: center;
+	width: 90%;
+	height: 10%;
+}
+
+.destination-dropdown {
+	height: 10%;
+}
+
+.submit-button {
+	text-align: center;
+	width: 95%;
+	height: 7%;
+}
+

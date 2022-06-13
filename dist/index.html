@@ -67,19 +67,19 @@
 			</section>
 			<section class="new-trips-container">
 				<aside class="new-trips-form-section">
-					<h1>Want to take another trip?</h1>
 					<form class="new-trip-input-form" id="newTripSubmitButton" method="post">
-						<label for="date">Select the Date</label><br>
-						<input type="date" id="dateField" required><br>
-						<label for="number">Duration</label><br>
-						<input type ="number" placeholder="Enter Duration" class="input-text" id="durationField" required><br><br><br>
-						<label for="number">Number of Travelers</label><br>
-						<input type ="number" placeholder="Enter Number of Travelers" class="input-text" id="travelersField" required><br><br><br>
-						<label for="destination">Destination</label><br>
-						<select name="Destination" class="destination-dropdown" id="destinationDropdown">
-							<option disabled selected hidden>Select a Destination</option>
+						<p>WANT TO BOOK ANOTHER TRIP?</p>
+						<label for="date">Select Date:</label><br>
+						<input type="date" id="dateField" class="form-calendar-field" required><br><br>
+						<label for="number">Enter Number of Days:</label><br>
+						<input type ="number" placeholder="Enter Duration" class="input-text" id="durationField" required><br><br>
+						<label for="number">Enter Number of Travelers:</label><br>
+						<input type ="number" placeholder="Enter Number of Travelers" class="input-text" id="travelersField" required><br><br>
+						<label for="destination">Choose Destination:</label><br>
+						<select name="Destination" class="destination-dropdown" id="destinationDropdown"><br><br>
+							<option disabled selected>Select a Destination</option><br><br>
 						</select>
-						<input type="submit" value="Submit" class="submit-button">
+						<input type="submit" value="Submit" class="submit-button"><br><br><br><br>
 					</form>
 					<section class="trip-estimate" id="tripEstimate"></section>
 				</aside>
