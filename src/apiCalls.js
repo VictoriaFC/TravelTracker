@@ -6,6 +6,12 @@ const fetchAll = (dataType) => {
 			.catch(error => console.log(error));
 }
 
+const fetchOne = (dataType, Id) => {
+	return fetch(`http://localhost:3001/api/v1/${dataType}/${Id}`)
+			.then(response => response.json())
+			.catch(error => console.log(error));
+}
+
 // fetch POST
 const postData = (url, newData) => {
 	console.log(newData)
@@ -24,4 +30,4 @@ const postData = (url, newData) => {
   });
 }
 
-export { fetchAll, postData }
+export { fetchAll, fetchOne, postData }

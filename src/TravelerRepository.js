@@ -10,9 +10,10 @@ class TravelerRepository {
 		return this.travelers.find((traveler) => traveler.id === randomId)
 	}
 
-	findById() {
-		// username is traveler + Number
-		// password is traveler
+	findTravelerById(id) {
+		return this.travelers.find((traveler) => {
+			return traveler.id === id;
+		})
 	}
 }
 

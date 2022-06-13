@@ -42,7 +42,6 @@ window.addEventListener("load", () => {
 	loginButton.addEventListener('click', showTravelerPage);
 	signOutButton.addEventListener('click', showLoginPage);
 
-
 	newTripSubmitButton.addEventListener('submit', postNewTrip);
 	newTripSubmitButton.addEventListener('change', displayTripEstimate);
 	allTripsButton.addEventListener('click', showAllTrips);
@@ -52,13 +51,12 @@ window.addEventListener("load", () => {
 	pendingTripsButton.addEventListener('click', showPendingTrips);
 })
 
-// function letUserLogin() {
-// 	if (travelerRepo)
-// }
+function letTravelerLogin(travelerRepo) {
+	const user = document.getElementById("uname").value;
+	const pass = document.getElementById("psw").value;
+	const splitUserID = user.split('traveler')[1]
 
-// function letTravelerLogOut() {
-
-// }
+}
 
 function showTravelerPage() {
 	travelerMainPage.classList.remove('hidden')
@@ -87,6 +85,7 @@ function loadData(fetchRequests, loadTraveler = true) {
 		displayPendingTrips();
 		displayTotalSpentPerYear();
 		displayDestinationDropdown(destinationRepo.destinations);
+		letTravelerLogin();
 	})
 } 
 
@@ -245,7 +244,7 @@ function postNewTrip(e) {
 		destinationID: parseInt(tripDestination),
 		travelers: parseInt(tripTravelers),
 		date: formattedDate,
-		duration: tripDuration,
+		duration: parseInt(tripDuration),
 		status: 'pending',
 		suggestedActivities: []
 	};
