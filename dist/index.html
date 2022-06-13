@@ -4,82 +4,57 @@
   <meta charset="UTF-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<link rel="icon" type="image/x-icon" href="./images/viaVictoria.jpg">
+	<link rel="preconnect" href="https://fonts.googleapis.com">
+	<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+	<link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@300;400&display=swap" rel="stylesheet">
   <title>Travel via Victoria</title>
 </head>
 <body>
-  <nav class="header-container">
-    <img class="logo" src="./images/viaVictoria.jpg" alt="turing logo">
+  <header class="header-container">
+    <img class="logo" src="./images/viaVictoria.jpg" alt="travel via victoria logo">
     <button class="sign-out-button">Sign Out</button>
-  </nav>
+	</header>
   <main class="main-container"> 
-    <nav class="dashboard-nav">
-      <section class="button-section">
+    <section class="dashboard-nav">
+      <nav class="button-section">
         <button class="trip-button" id="allTripsButton" alt="all trips button">ALL TRIPS</button>
         <button class="trip-button" id="upcomingTripsButton" alt="upcoming trips button">UPCOMING</button>
         <button class="trip-button" id="presentTripsButton" alt="present trips button">PRESENT</button>
         <button class="trip-button" id="pastTripsButton" alt="past trips button">PAST</button>
         <button class="trip-button" id="pendingTripsButton" alt="pending trips button">PENDING</button>
-      </section>
+			</nav>
       <section class="total-spent-section" id="totalSpentPerYear"></section>
-    </nav>
+    </section>
     <section class="dashboard-container">
 			<section class="trips-container">
 				<ul class="trips-data-section" id="allTripsData">ALL TRIPS
-					<li class="trip-row">
-						<div class= "trip-image trip-attr">Image</div>
-						<div class="trip-destination trip-attr">Location</div>
-						<div class="trip-date trip-attr">Start Date</div>
-						<div class="trip-travelers trip-attr">Travelers</div>
-					</li>
 				</ul>
-				<ul class="trips-data-section hidden" id="upcomingTripsData">UPCOMING TRIPS
-					<li class="trip-row">
-						<div class= "trip-image trip-attr">Image</div>
-						<div class="trip-destination trip-attr">Location</div>
-						<div class="trip-date trip-attr">Start Date</div>
-						<div class="trip-travelers trip-attr">Travelers</div>
-					</li>
+				<ul  class="trips-data-section hidden" id="upcomingTripsData">UPCOMING TRIPS
 				</ul>
 				<ul class="trips-data-section hidden" id="presentTripsData">PRESENT TRIPS
-					<li class="trip-row">
-						<div class= "trip-image trip-attr">Image</div>
-						<div class="trip-destination trip-attr">Location</div>
-						<div class="trip-date trip-attr">Start Date</div>
-						<div class="trip-travelers trip-attr">Travelers</div>
-					</li>
 				</ul>
 				<ul class="trips-data-section hidden" id="pastTripsData">PAST TRIPS
-					<li class="trip-row">
-						<div class= "trip-image trip-attr">Image</div>
-						<div class="trip-destination trip-attr">Location</div>
-						<div class="trip-date trip-attr">Start Date</div>
-						<div class="trip-travelers trip-attr">Travelers</div>
-					</li>
 				</ul>
 				<ul class="trips-data-section hidden" id="pendingTripsData">PENDING TRIPS
-					<li class="trip-row">
-						<div class= "trip-image trip-attr">Image</div>
-						<div class="trip-destination trip-attr">Location</div>
-						<div class="trip-date trip-attr">Start Date</div>
-						<div class="trip-travelers trip-attr">Travelers</div>
-					</li>
 				</ul>
 			</section>
 			<section class="new-trips-container">
 				<aside class="new-trips-form-section">
-					<form class="new-trip-input-form" id="newTripSubmitButton" method="post">
+					<form class="new-trip-input-form" id="newTripSubmitButton">
 						<p>WANT TO BOOK ANOTHER TRIP?</p>
-						<label for="date">Select Date:</label><br>
-						<input type="date" id="dateField" class="form-calendar-field" required><br><br>
-						<label for="number">Enter Number of Days:</label><br>
-						<input type ="number" placeholder="Enter Duration" class="input-text" id="durationField" required><br><br>
-						<label for="number">Enter Number of Travelers:</label><br>
-						<input type ="number" placeholder="Enter Number of Travelers" class="input-text" id="travelersField" required><br><br>
-						<label for="destination">Choose Destination:</label><br>
-						<select name="Destination" class="destination-dropdown" id="destinationDropdown"><br><br>
-							<option disabled selected>Select a Destination</option><br><br>
-						</select><br><br>
-						<input type="submit" value="Submit" class="submit-button"><br><br><br><br>
+						<label for="date">Select Date:
+							<input type="date" id="dateField" class="form-calendar-field" required>
+						</label>
+						<label for="number">Enter Number of Days:</label>
+						<input type="number" placeholder="Enter Duration" class="input-text" id="durationField" required>
+						<label for="number">Enter Number of Travelers:</label>
+						<input type="number" placeholder="Enter Number of Travelers" class="input-text" id="travelersField" required>
+						<label for="choose destination">Choose Destination:</label>
+						<select name="Destination" class="destination-dropdown" id="destinationDropdown">
+							<option disabled selected>Select a Destination</option>
+						</select>
+						<input type="submit" value="Submit" class="submit-button">
 					</form>
 					<section class="trip-estimate" id="tripEstimate"></section>
 				</aside>
