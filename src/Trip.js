@@ -16,6 +16,14 @@ class Trip {
 
 		return endDate;
 	}
+
+	calculateCost(destinationRepo) {
+		const destination = destinationRepo.findById(this.destinationID)
+		const totalLodgingCost = destination.lodgingCost * this.duration * this.travelers
+		const totalFlightCost = destination.flightCost * this.travelers
+		
+		return (totalLodgingCost + totalFlightCost) * 0.9
+	}
 }
 
 export default Trip;

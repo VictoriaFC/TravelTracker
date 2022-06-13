@@ -2,11 +2,12 @@
 // Do not delete or rename this file ********
 import './css/styles.css';
 import './images/turing-logo.png'
-import './images/viaVictoria.png'
+import './images/viaVictoria.jpg'
 import TravelerRepository from './TravelerRepository';
 import TripRepository from './TripRepository';
 import DestinationRepository from './DestinationRepository';
-import {fetchAll} from './apiCalls';
+import { fetchAll, postData } from './apiCalls';
+import Trip from './Trip';
 
 console.log('This is the JavaScript entry file - your code begins here.');
 
@@ -27,14 +28,16 @@ var upcomingTripsData = document.getElementById('upcomingTripsData');
 var presentTripsData = document.getElementById('presentTripsData');
 var pastTripsData = document.getElementById('pastTripsData');
 var pendingTripsData = document.getElementById('pendingTripsData');
-
+var newTripSubmitButton = document.getElementById('newTripSubmitButton')
 
 // ****** fetch GET ******
-function loadData(fetchRequests) {
+function loadData(fetchRequests, loadTraveler = true) {
 	Promise.all(fetchRequests)
 	.then(data => {
 		travelerRepo = new TravelerRepository(data[0].travelers);
-		traveler = travelerRepo.randomTraveler()
+		if (loadTraveler) {
+			traveler = travelerRepo.randomTraveler()
+		}
 		tripRepo = new TripRepository(data[1].trips);
 		destinationRepo = new DestinationRepository(data[2].destinations);
 		displayAllTrips();
@@ -43,10 +46,14 @@ function loadData(fetchRequests) {
 		displayPastTrips();
 		displayPendingTrips();
 		displayTotalSpentPerYear();
+		displayDestinationDropdown(destinationRepo.destinations);
 	})
 } 
 
 loadData([fetchAll('travelers'), fetchAll('trips'), fetchAll('destinations')]);
+
+newTripSubmitButton.addEventListener('submit', postNewTrip)
+
 
 const showAllTrips = () => {
 	allTripsData.classList.remove('hidden');
@@ -59,9 +66,10 @@ const showAllTrips = () => {
 allTripsButton.addEventListener('click', showAllTrips);
 
 const displayAllTrips = () => {
-tripRepo.getAllTrips(traveler.id).forEach((trip) => {
-	allTripsData.innerHTML += generateTripDomElement(trip);
-})
+	allTripsData.innerHTML = "";
+	tripRepo.getAllTrips(traveler.id).forEach((trip) => {
+		allTripsData.innerHTML += generateTripDomElement(trip);
+	})
 }
 
 const showUpcomingTrips = () => {
@@ -75,6 +83,7 @@ const showUpcomingTrips = () => {
 upcomingTripsButton.addEventListener('click', showUpcomingTrips);
 
 const displayUpcomingTrips = () => {
+	upcomingTripsData.innerHTML = "";
 	tripRepo.getUpcomingTrips(traveler.id).forEach((trip) => {
 		upcomingTripsData.innerHTML += generateTripDomElement(trip);
 	})	
@@ -91,6 +100,7 @@ const showPresentTrips = () => {
 presentTripsButton.addEventListener('click', showPresentTrips);
 
 const displayPresentTrips = () => {
+	presentTripsData.innerHTML = "";
 	tripRepo.getPresentTrips(traveler.id).forEach((trip) => {
 		presentTripsData.innerHTML += generateTripDomElement(trip);
 	})
@@ -107,6 +117,7 @@ const showPastTrips = () => {
 pastTripsButton.addEventListener('click', showPastTrips);
 
 const displayPastTrips = () => {
+	pastTripsData.innerHTML = "";
 	tripRepo.getPastTrips(traveler.id).forEach((trip) => {
 		pastTripsData.innerHTML += generateTripDomElement(trip);
 	})
@@ -123,6 +134,7 @@ const showPendingTrips = () => {
 pendingTripsButton.addEventListener('click', showPendingTrips);
 
 const displayPendingTrips = () => {
+	pendingTripsData.innerHTML = "";
 	tripRepo.getPendingTrips(traveler.id).forEach((trip) => {
 		pendingTripsData.innerHTML += generateTripDomElement(trip);
 	})
@@ -144,5 +156,81 @@ const displayTotalSpentPerYear = () => {
 	const now = new Date()
 	const totalCost = tripRepo.calculateTotalTravelCostForYear(destinationRepo, traveler.id)
 	const totalCostField = document.getElementById('totalSpentPerYear');
-	totalCostField.innerText = `Total Spent on Travel in ${now.getFullYear()}: $${totalCost}`
+	totalCostField.innerText = `Total Spent on Travel in ${now.getFullYear()}: \n$${totalCost.toFixed(2)}`
+}
+
+function displayDestinationDropdown(destinations) {
+	let destinationDropdown = document.getElementById('destinationDropdown');
+	destinations.forEach(destination => {
+			let newOption = new Option(destination.destination, destination.id)
+			destinationDropdown.appendChild(newOption);
+	});
+}
+
+function postNewTrip(e) {
+	e.preventDefault();
+	var tripDate = document.getElementById('dateField').value;
+	var splitDate = tripDate.split('-')
+	var formattedDate = splitDate.join('/')
+	var tripDuration = document.getElementById('durationField').value;
+	var tripTravelers = document.getElementById('travelersField').value;
+	var tripDestination = document.getElementById('destinationDropdown').value;
+	console.log(tripDestination)
+	var newId = tripRepo.findHightestTripId() + 1;
+	var travelerId = traveler.id;
+	clearForm();
+	const newTripData = {
+		id: newId,
+		userID: travelerId,
+		destinationID: parseInt(tripDestination),
+		travelers: parseInt(tripTravelers),
+		date: formattedDate,
+		duration: tripDuration,
+		status: 'pending',
+		suggestedActivities: []
+	};
+
+	postData('http://localhost:3001/api/v1/trips', newTripData).then(json => {
+		loadData([fetchAll('travelers'), fetchAll('trips'), fetchAll('destinations')], false);
+	})
+}
+
+newTripSubmitButton.addEventListener('change', displayTripEstimate)
+
+function displayTripEstimate() {
+	var tripDate = document.getElementById('dateField').value;
+	var splitDate = tripDate.split('-')
+	var formattedDate = splitDate.join('/')
+	var tripDuration = document.getElementById('durationField').value;
+	var tripTravelers = document.getElementById('travelersField').value;
+	var tripDestination = document.getElementById('destinationDropdown').value;
+	var newId = tripRepo.findHightestTripId() + 1;
+	var travelerId = traveler.id;
+	const newTripData = {
+		id: newId,
+		userID: travelerId,
+		destinationID: parseInt(tripDestination),
+		travelers: parseInt(tripTravelers),
+		date: formattedDate,
+		duration: tripDuration,
+		status: 'pending',
+		suggestedActivities: []
+	};
+	console.log(newTripData)
+	
+	const checkItOut = Object.values(newTripData)
+	if (checkItOut.includes('') || checkItOut.includes(NaN)) {
+		return
+	}
+
+	const newTrip = new Trip(newTripData)
+	const estimatedCost = newTrip.calculateCost(destinationRepo)
+	tripEstimate.innerHTML = `Your Trip Estimate is: $${estimatedCost.toFixed(2)}`
+}
+
+function clearForm() {
+	document.getElementById('dateField').value = '';
+	document.getElementById('durationField').value = '';
+	document.getElementById('travelersField').value = '';
+	document.getElementById('destinationDropdown').selectedIndex = 0;
 }
