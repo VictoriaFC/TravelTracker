@@ -30,6 +30,18 @@ var pastTripsData = document.getElementById('pastTripsData');
 var pendingTripsData = document.getElementById('pendingTripsData');
 var newTripSubmitButton = document.getElementById('newTripSubmitButton')
 
+window.addEventListener("load", () => {
+	loadData([fetchAll('travelers'), fetchAll('trips'), fetchAll('destinations')])
+
+	newTripSubmitButton.addEventListener('submit', postNewTrip)	
+	newTripSubmitButton.addEventListener('change', displayTripEstimate)
+	allTripsButton.addEventListener('click', showAllTrips);
+	upcomingTripsButton.addEventListener('click', showUpcomingTrips);
+	pastTripsButton.addEventListener('click', showPastTrips);
+	presentTripsButton.addEventListener('click', showPresentTrips);
+	pendingTripsButton.addEventListener('click', showPendingTrips);
+})
+
 // ****** fetch GET ******
 function loadData(fetchRequests, loadTraveler = true) {
 	Promise.all(fetchRequests)
@@ -50,12 +62,12 @@ function loadData(fetchRequests, loadTraveler = true) {
 	})
 } 
 
-loadData([fetchAll('travelers'), fetchAll('trips'), fetchAll('destinations')]);
-
-newTripSubmitButton.addEventListener('submit', postNewTrip)
-
-
 const showAllTrips = () => {
+	allTripsButton.classList.add('trip-button-selected');
+	upcomingTripsButton.classList.remove('trip-button-selected');
+	presentTripsButton.classList.remove('trip-button-selected');
+	pastTripsButton.classList.remove('trip-button-selected');
+	pendingTripsButton.classList.remove('trip-button-selected');
 	allTripsData.classList.remove('hidden');
 	upcomingTripsData.classList.add('hidden');
 	presentTripsData.classList.add('hidden');
@@ -63,16 +75,19 @@ const showAllTrips = () => {
 	pendingTripsData.classList.add('hidden');
 }
 
-allTripsButton.addEventListener('click', showAllTrips);
-
 const displayAllTrips = () => {
-	allTripsData.innerHTML = "";
+	allTripsData.innerHTML = generateHeaderRow();
 	tripRepo.getAllTrips(traveler.id).forEach((trip) => {
 		allTripsData.innerHTML += generateTripDomElement(trip);
 	})
 }
 
 const showUpcomingTrips = () => {
+	allTripsButton.classList.remove('trip-button-selected');
+	upcomingTripsButton.classList.add('trip-button-selected');
+	presentTripsButton.classList.remove('trip-button-selected');
+	pastTripsButton.classList.remove('trip-button-selected');
+	pendingTripsButton.classList.remove('trip-button-selected');
 	upcomingTripsData.classList.remove('hidden');
 	allTripsData.classList.add('hidden');
 	presentTripsData.classList.add('hidden');
@@ -80,16 +95,19 @@ const showUpcomingTrips = () => {
 	pendingTripsData.classList.add('hidden');
 }
 
-upcomingTripsButton.addEventListener('click', showUpcomingTrips);
-
 const displayUpcomingTrips = () => {
-	upcomingTripsData.innerHTML = "";
+	upcomingTripsData.innerHTML = generateHeaderRow();
 	tripRepo.getUpcomingTrips(traveler.id).forEach((trip) => {
 		upcomingTripsData.innerHTML += generateTripDomElement(trip);
 	})	
 }
 
 const showPresentTrips = () => {
+	allTripsButton.classList.remove('trip-button-selected');
+	upcomingTripsButton.classList.remove('trip-button-selected');
+	presentTripsButton.classList.add('trip-button-selected');
+	pastTripsButton.classList.remove('trip-button-selected');
+	pendingTripsButton.classList.remove('trip-button-selected');
 	upcomingTripsData.classList.add('hidden');
 	allTripsData.classList.add('hidden');
 	presentTripsData.classList.remove('hidden');
@@ -97,16 +115,19 @@ const showPresentTrips = () => {
 	pendingTripsData.classList.add('hidden');
 }
 
-presentTripsButton.addEventListener('click', showPresentTrips);
-
 const displayPresentTrips = () => {
-	presentTripsData.innerHTML = "";
+	presentTripsData.innerHTML = generateHeaderRow();
 	tripRepo.getPresentTrips(traveler.id).forEach((trip) => {
 		presentTripsData.innerHTML += generateTripDomElement(trip);
 	})
 }
 
 const showPastTrips = () => {
+	allTripsButton.classList.remove('trip-button-selected');
+	upcomingTripsButton.classList.remove('trip-button-selected');
+	presentTripsButton.classList.remove('trip-button-selected');
+	pastTripsButton.classList.add('trip-button-selected');
+	pendingTripsButton.classList.remove('trip-button-selected');
 	upcomingTripsData.classList.add('hidden');
 	allTripsData.classList.add('hidden');
 	presentTripsData.classList.add('hidden');
@@ -114,16 +135,19 @@ const showPastTrips = () => {
 	pendingTripsData.classList.add('hidden');
 }
 
-pastTripsButton.addEventListener('click', showPastTrips);
-
 const displayPastTrips = () => {
-	pastTripsData.innerHTML = "";
+	pastTripsData.innerHTML = generateHeaderRow();
 	tripRepo.getPastTrips(traveler.id).forEach((trip) => {
 		pastTripsData.innerHTML += generateTripDomElement(trip);
 	})
 }
 
 const showPendingTrips = () => {
+	allTripsButton.classList.remove('trip-button-selected');
+	upcomingTripsButton.classList.remove('trip-button-selected');
+	presentTripsButton.classList.remove('trip-button-selected');
+	pastTripsButton.classList.remove('trip-button-selected');
+	pendingTripsButton.classList.add('trip-button-selected');
 	upcomingTripsData.classList.add('hidden');
 	allTripsData.classList.add('hidden');
 	presentTripsData.classList.add('hidden');
@@ -131,10 +155,8 @@ const showPendingTrips = () => {
 	pendingTripsData.classList.remove('hidden');
 }
 
-pendingTripsButton.addEventListener('click', showPendingTrips);
-
 const displayPendingTrips = () => {
-	pendingTripsData.innerHTML = "";
+	pendingTripsData.innerHTML = generateHeaderRow();
 	tripRepo.getPendingTrips(traveler.id).forEach((trip) => {
 		pendingTripsData.innerHTML += generateTripDomElement(trip);
 	})
@@ -144,9 +166,10 @@ const generateTripDomElement = (trip) => {
   const destination = destinationRepo.findById(trip.destinationID)
   return `
     <li class="trip-row">
-      <img class= "trip-image trip-attr" src="${destination.image.url}" alt="${destination.image.alt}">
+      <div class="img-attr"><img class= "trip-image" src="${destination.image.url}" alt="${destination.image.alt}"></div>
       <div class="trip-destination trip-attr">${destination.destination}</div>
       <div class="trip-date trip-attr">${trip.date.toLocaleDateString()}</div>
+      <div class="trip-date trip-attr">${trip.getEndDate().toLocaleDateString()}</div>
       <div class="trip-travelers trip-attr">${trip.travelers} travelers</div>
     </li>
   `
@@ -167,6 +190,16 @@ function displayDestinationDropdown(destinations) {
 	});
 }
 
+function generateHeaderRow() {
+	return `<li class="trip-row trip-row-header">
+		<div class="img-attr"></div>
+		<div class="trip-destination trip-attr">Location</div>
+		<div class="trip-date trip-attr">Start Date</div>
+		<div class="trip-date trip-attr">End Date</div>
+		<div class="trip-travelers trip-attr">Travelers</div>
+	</li>`
+}
+
 function postNewTrip(e) {
 	e.preventDefault();
 	var tripDate = document.getElementById('dateField').value;
@@ -175,7 +208,6 @@ function postNewTrip(e) {
 	var tripDuration = document.getElementById('durationField').value;
 	var tripTravelers = document.getElementById('travelersField').value;
 	var tripDestination = document.getElementById('destinationDropdown').value;
-	console.log(tripDestination)
 	var newId = tripRepo.findHightestTripId() + 1;
 	var travelerId = traveler.id;
 	clearForm();
@@ -194,8 +226,6 @@ function postNewTrip(e) {
 		loadData([fetchAll('travelers'), fetchAll('trips'), fetchAll('destinations')], false);
 	})
 }
-
-newTripSubmitButton.addEventListener('change', displayTripEstimate)
 
 function displayTripEstimate() {
 	var tripDate = document.getElementById('dateField').value;

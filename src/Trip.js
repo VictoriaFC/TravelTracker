@@ -13,7 +13,6 @@ class Trip {
 	getEndDate() {
 		const endDate = new Date(this.date.getTime());
 		endDate.setDate(this.date.getDate() + this.duration);
-
 		return endDate;
 	}
 
