@@ -1,13 +1,17 @@
 import chai from 'chai';
+import DestinationRepository from '../src/Destination';
 import Trip from '../src/Trip';
-import Destination from '../src/Destination'
+
 const expect = chai.expect;
 
 describe('Trip', function() {
   let newTrip;
   let newTrip2;
+	let newDestination;
+	let newDestination2;
   let tripData;
   let tripData2;
+	let destinationData;
   beforeEach(() => {
     tripData = {
       "id": 1,
@@ -29,8 +33,28 @@ describe('Trip', function() {
       "status": "approved",
       "suggestedActivities":[]
     }
+		destinationData = [ 
+		{
+			"id": 49,
+			"destination": "Castries, St Lucia",
+			"estimatedLodgingCostPerDay": 650,
+			"estimatedFlightCostPerPerson": 90,
+			"image": "https://images.unsplash.com/photo-1524478075552-c2763ea171b8?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1502&q=80",
+			"alt": "aerial photography of rocky mountain under cloudy sky"
+		}, 
+		{
+			"id": 25,
+			"destination": "New York, New York",
+			"estimatedLodgingCostPerDay": 175,
+			"estimatedFlightCostPerPerson": 200,
+			"image": "https://images.unsplash.com/photo-1496442226666-8d4d0e62e6e9?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1950&q=80",
+			"alt": "people crossing the street during the day surrounded by tall buildings and advertisements"
+	}
+	]
     newTrip = new Trip(tripData)
     newTrip2 = new Trip(tripData2)
+		newDestination = new DestinationRepository(destinationData)
+		newDestination2 = new DestinationRepository(destinationData)
   })
   it('should be a function', function () {
     expect(Trip).to.be.a('function');
@@ -75,7 +99,7 @@ describe('Trip', function() {
 		expect(newTrip2.getEndDate(tripData2).toLocaleDateString()).to.equal('10/22/2022');
 	})
 	it.skip('should be able to calculate the trip cost', function () {
-		expect(newTrip.calculateCost()).to.equal();
-		expect(newTrip.calculateCost()).to.equal();
+		expect(newTrip.calculateCost(newDestination.findById())).to.equal();
+		expect(newTrip.calculateCost(newDestination2.findById())).to.equal();
 	})
 });
