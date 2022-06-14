@@ -1,10 +1,7 @@
-// This is the JavaScript entry file - your code begins here
-// Do not delete or rename this file ********
 import './css/styles.css';
 import './images/turing-logo.png'
 import './images/viaVictoria.jpg'
 import Traveler from './Traveler';
-// import TravelerRepository from './TravelerRepository';
 import TripRepository from './TripRepository';
 import DestinationRepository from './DestinationRepository';
 import { fetchAll, fetchOne, postData } from './apiCalls';
@@ -221,9 +218,13 @@ const generateTripDomElement = (trip) => {
 
 const displayTotalSpentPerYear = () => {
 	const now = new Date()
+	const dollarUSLocale = Intl.NumberFormat('en-US', {
+		style: 'currency',
+		currency: 'USD'
+	})
 	const totalCost = tripRepo.calculateTotalTravelCostForYear(destinationRepo, traveler.id)
 	const totalCostField = document.getElementById('totalSpentPerYear');
-	totalCostField.innerText = `Total Spent on Travel in ${now.getFullYear()}: \n$${totalCost.toFixed(2)}`
+	totalCostField.innerText = `Total Spent on Travel in ${now.getFullYear()}: \n${dollarUSLocale.format(totalCost)}`
 }
 
 function displayDestinationDropdown() {
@@ -297,8 +298,12 @@ function displayTripEstimate() {
 	}
 
 	const newTrip = new Trip(newTripData)
+	const dollarUSLocale = Intl.NumberFormat('en-US', {
+		style: 'currency',
+		currency: 'USD'
+	})
 	const estimatedCost = newTrip.calculateCost(destinationRepo)
-	tripEstimate.innerHTML = `Your Trip Estimate is: $${estimatedCost.toFixed(2)}`
+	tripEstimate.innerHTML = `Your Trip Estimate is: ${dollarUSLocale.format(estimatedCost)}`
 }
 
 function clearForm() {
