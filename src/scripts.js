@@ -7,8 +7,6 @@ import DestinationRepository from './DestinationRepository';
 import { fetchAll, fetchOne, postData } from './apiCalls';
 import Trip from './Trip';
 
-console.log('This is the JavaScript entry file - your code begins here.');
-
 // ****** global variables ******
 let traveler;
 let tripRepo;
@@ -27,12 +25,15 @@ var pastTripsButton = document.getElementById('pastTripsButton');
 var pendingTripsButton = document.getElementById('pendingTripsButton');
 var newTripSubmitButton = document.getElementById('newTripSubmitButton')
 
-var allTripsData = document.getElementById('allTripsData')
+var allTripsData = document.getElementById('allTripsData');
 var upcomingTripsData = document.getElementById('upcomingTripsData');
 var presentTripsData = document.getElementById('presentTripsData');
 var pastTripsData = document.getElementById('pastTripsData');
 var pendingTripsData = document.getElementById('pendingTripsData');
+var tripEstimate = document.getElementById('tripEstimate');
 
+
+// ****** page load event listener ******
 window.addEventListener("load", () => {
 	loginButton.addEventListener("click", attemptLogin)
 	signOutButton.addEventListener("click", logout)
@@ -45,7 +46,6 @@ window.addEventListener("load", () => {
 	presentTripsButton.addEventListener('click', showPresentTrips);
 	pendingTripsButton.addEventListener('click', showPendingTrips);
 })
-
 
 function attemptLogin(event) {
 	event.preventDefault()
@@ -292,8 +292,8 @@ function displayTripEstimate() {
 		suggestedActivities: []
 	};
 	
-	const checkItOut = Object.values(newTripData)
-	if (checkItOut.includes('') || checkItOut.includes(NaN)) {
+	const newTripValues = Object.values(newTripData)
+	if (newTripValues.includes('') || newTripValues.includes(NaN)) {
 		return
 	}
 
