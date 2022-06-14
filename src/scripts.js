@@ -37,7 +37,6 @@ var tripEstimate = document.getElementById('tripEstimate');
 window.addEventListener("load", () => {
 	loginButton.addEventListener("click", attemptLogin)
 	signOutButton.addEventListener("click", logout)
-
 	newTripSubmitButton.addEventListener('submit', postNewTrip);
 	newTripSubmitButton.addEventListener('change', displayTripEstimate);
 	allTripsButton.addEventListener('click', showAllTrips);
@@ -53,7 +52,7 @@ function attemptLogin(event) {
 	const pass = document.getElementById("psw").value;
 	const splitUsername =  username.split('traveler')
 	const userId = parseInt(splitUsername[1])
-	const validInputs = userId !== NaN && pass === "traveler" && splitUsername[0] === ""
+	const validInputs = userId !== NaN && pass === "travel" && splitUsername[0] === ""
 
 	if (!validInputs) {
 		alert("Invalid username/password")
