@@ -1,40 +1,45 @@
-// This is the JavaScript entry file - your code begins here
-// Do not delete or rename this file ********
 import './css/styles.css';
 import './images/turing-logo.png'
 import './images/viaVictoria.jpg'
-import TravelerRepository from './TravelerRepository';
+import Traveler from './Traveler';
 import TripRepository from './TripRepository';
 import DestinationRepository from './DestinationRepository';
-import { fetchAll, postData } from './apiCalls';
+import { fetchAll, fetchOne, postData } from './apiCalls';
 import Trip from './Trip';
-
-console.log('This is the JavaScript entry file - your code begins here.');
 
 // ****** global variables ******
 let traveler;
-let travelerRepo;
 let tripRepo;
 let destinationRepo;
 
 // ****** querySelectors ******
+var loginButton = document.getElementById('loginButton');
+var signOutButton = document.getElementById('signOutButton');
+var loginMainPage = document.getElementById('loginPage');
+var travelerMainPage = document.getElementById('travelerPage');
+
 var allTripsButton = document.getElementById('allTripsButton');
 var upcomingTripsButton = document.getElementById('upcomingTripsButton');
 var presentTripsButton = document.getElementById('presentTripsButton');
 var pastTripsButton = document.getElementById('pastTripsButton');
 var pendingTripsButton = document.getElementById('pendingTripsButton');
-var allTripsData = document.getElementById('allTripsData')
+var newTripSubmitButton = document.getElementById('newTripSubmitButton')
+
+var allTripsData = document.getElementById('allTripsData');
 var upcomingTripsData = document.getElementById('upcomingTripsData');
 var presentTripsData = document.getElementById('presentTripsData');
 var pastTripsData = document.getElementById('pastTripsData');
 var pendingTripsData = document.getElementById('pendingTripsData');
-var newTripSubmitButton = document.getElementById('newTripSubmitButton')
+var tripEstimate = document.getElementById('tripEstimate');
 
+
+// ****** page load event listener ******
 window.addEventListener("load", () => {
-	loadData([fetchAll('travelers'), fetchAll('trips'), fetchAll('destinations')])
+	loginButton.addEventListener("click", attemptLogin)
+	signOutButton.addEventListener("click", logout)
 
-	newTripSubmitButton.addEventListener('submit', postNewTrip)	
-	newTripSubmitButton.addEventListener('change', displayTripEstimate)
+	newTripSubmitButton.addEventListener('submit', postNewTrip);
+	newTripSubmitButton.addEventListener('change', displayTripEstimate);
 	allTripsButton.addEventListener('click', showAllTrips);
 	upcomingTripsButton.addEventListener('click', showUpcomingTrips);
 	pastTripsButton.addEventListener('click', showPastTrips);
@@ -42,23 +47,59 @@ window.addEventListener("load", () => {
 	pendingTripsButton.addEventListener('click', showPendingTrips);
 })
 
+function attemptLogin(event) {
+	event.preventDefault()
+	const username = document.getElementById("uname").value;
+	const pass = document.getElementById("psw").value;
+	const splitUsername =  username.split('traveler')
+	const userId = parseInt(splitUsername[1])
+	const validInputs = userId !== NaN && pass === "traveler" && splitUsername[0] === ""
+
+	if (!validInputs) {
+		alert("Invalid username/password")
+		return
+	}
+
+	fetchOne('travelers', userId).then((travelerData) => {
+		if (travelerData) {
+			traveler = new Traveler(travelerData)
+			loadData([fetchAll('trips'), fetchAll('destinations')])
+			showTravelerPage()
+			document.getElementById("uname").value = "";
+			document.getElementById("psw").value = "";
+		} else {
+			alert("Invalid username/password")
+		}
+	})
+}
+
+function showTravelerPage() {
+	travelerMainPage.classList.remove('hidden')
+	loginMainPage.classList.add('hidden')
+}
+
+function logout() {
+	travelerMainPage.classList.add('hidden')
+	loginMainPage.classList.remove('hidden')
+	traveler = undefined 
+	tripRepo = undefined
+	destinationRepo = undefined
+}
+
 // ****** fetch GET ******
-function loadData(fetchRequests, loadTraveler = true) {
+function loadData(fetchRequests) {
 	Promise.all(fetchRequests)
 	.then(data => {
-		travelerRepo = new TravelerRepository(data[0].travelers);
-		if (loadTraveler) {
-			traveler = travelerRepo.randomTraveler()
-		}
-		tripRepo = new TripRepository(data[1].trips);
-		destinationRepo = new DestinationRepository(data[2].destinations);
+		tripRepo = new TripRepository(data[0].trips);
+		destinationRepo = new DestinationRepository(data[1].destinations);
+		showAllTrips()
 		displayAllTrips();
 		displayUpcomingTrips();
 		displayPresentTrips();
 		displayPastTrips();
 		displayPendingTrips();
 		displayTotalSpentPerYear();
-		displayDestinationDropdown(destinationRepo.destinations);
+		displayDestinationDropdown();
 	})
 } 
 
@@ -177,14 +218,18 @@ const generateTripDomElement = (trip) => {
 
 const displayTotalSpentPerYear = () => {
 	const now = new Date()
+	const dollarUSLocale = Intl.NumberFormat('en-US', {
+		style: 'currency',
+		currency: 'USD'
+	})
 	const totalCost = tripRepo.calculateTotalTravelCostForYear(destinationRepo, traveler.id)
 	const totalCostField = document.getElementById('totalSpentPerYear');
-	totalCostField.innerText = `Total Spent on Travel in ${now.getFullYear()}: \n$${totalCost.toFixed(2)}`
+	totalCostField.innerText = `Total Spent on Travel in ${now.getFullYear()}: \n${dollarUSLocale.format(totalCost)}`
 }
 
-function displayDestinationDropdown(destinations) {
+function displayDestinationDropdown() {
 	let destinationDropdown = document.getElementById('destinationDropdown');
-	destinations.forEach(destination => {
+	destinationRepo.destinations.forEach(destination => {
 			let newOption = new Option(destination.destination, destination.id)
 			destinationDropdown.appendChild(newOption);
 	});
@@ -217,13 +262,13 @@ function postNewTrip(e) {
 		destinationID: parseInt(tripDestination),
 		travelers: parseInt(tripTravelers),
 		date: formattedDate,
-		duration: tripDuration,
+		duration: parseInt(tripDuration),
 		status: 'pending',
 		suggestedActivities: []
 	};
 
 	postData('http://localhost:3001/api/v1/trips', newTripData).then(json => {
-		loadData([fetchAll('travelers'), fetchAll('trips'), fetchAll('destinations')], false);
+		loadData([fetchAll('trips'), fetchAll('destinations')]);
 	})
 }
 
@@ -246,16 +291,19 @@ function displayTripEstimate() {
 		status: 'pending',
 		suggestedActivities: []
 	};
-	console.log(newTripData)
 	
-	const checkItOut = Object.values(newTripData)
-	if (checkItOut.includes('') || checkItOut.includes(NaN)) {
+	const newTripValues = Object.values(newTripData)
+	if (newTripValues.includes('') || newTripValues.includes(NaN)) {
 		return
 	}
 
 	const newTrip = new Trip(newTripData)
+	const dollarUSLocale = Intl.NumberFormat('en-US', {
+		style: 'currency',
+		currency: 'USD'
+	})
 	const estimatedCost = newTrip.calculateCost(destinationRepo)
-	tripEstimate.innerHTML = `Your Trip Estimate is: $${estimatedCost.toFixed(2)}`
+	tripEstimate.innerHTML = `Your Trip Estimate is: ${dollarUSLocale.format(estimatedCost)}`
 }
 
 function clearForm() {
@@ -263,4 +311,5 @@ function clearForm() {
 	document.getElementById('durationField').value = '';
 	document.getElementById('travelersField').value = '';
 	document.getElementById('destinationDropdown').selectedIndex = 0;
+	tripEstimate.innerHTML = "";
 }

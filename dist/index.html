@@ -11,57 +11,74 @@
   <title>Travel via Victoria</title>
 </head>
 <body>
-  <header class="header-container">
-    <img class="logo" src="./images/viaVictoria.jpg" alt="travel via victoria logo">
-    <button class="sign-out-button">Sign Out</button>
-	</header>
-  <main class="main-container"> 
-    <section class="dashboard-nav">
-      <nav class="button-section">
-        <button class="trip-button" id="allTripsButton" alt="all trips button">ALL TRIPS</button>
-        <button class="trip-button" id="upcomingTripsButton" alt="upcoming trips button">UPCOMING</button>
-        <button class="trip-button" id="presentTripsButton" alt="present trips button">PRESENT</button>
-        <button class="trip-button" id="pastTripsButton" alt="past trips button">PAST</button>
-        <button class="trip-button" id="pendingTripsButton" alt="pending trips button">PENDING</button>
-			</nav>
-      <section class="total-spent-section" id="totalSpentPerYear"></section>
-    </section>
-    <section class="dashboard-container">
-			<section class="trips-container">
-				<ul class="trips-data-section" id="allTripsData">ALL TRIPS
-				</ul>
-				<ul  class="trips-data-section hidden" id="upcomingTripsData">UPCOMING TRIPS
-				</ul>
-				<ul class="trips-data-section hidden" id="presentTripsData">PRESENT TRIPS
-				</ul>
-				<ul class="trips-data-section hidden" id="pastTripsData">PAST TRIPS
-				</ul>
-				<ul class="trips-data-section hidden" id="pendingTripsData">PENDING TRIPS
-				</ul>
+	<main class="login-page" id="loginPage">
+		<header class="header-container">
+			<img class="logo" src="./images/viaVictoria.jpg" alt="travel via victoria logo">
+		</header>
+		<section class="login-form-container">
+			<form class="login-form" id="loginForm">
+				<label for="uname">Username
+					<input type="text" placeholder="Enter Username" name="uname" id="uname" required>
+				</label>
+				<label for="psw">Password
+					<input type="password" placeholder="Enter Password" name="psw" id="psw" required>
+				</label>
+				<button type="submit" class="login-button" id="loginButton">Login</button>
+			</form>
+		</section>
+	</main>
+	<main class="traveler-page hidden" id="travelerPage">
+		<header class="header-container">
+			<img class="logo" src="./images/viaVictoria.jpg" alt="travel via victoria logo">
+			<button class="sign-out-button" id="signOutButton">Sign Out</button>
+		</header>
+		<main class="main-container"> 
+			<section class="dashboard-nav">
+				<nav class="button-section">
+					<button class="trip-button" id="allTripsButton" alt="all trips button">ALL TRIPS</button>
+					<button class="trip-button" id="upcomingTripsButton" alt="upcoming trips button">UPCOMING</button>
+					<button class="trip-button" id="presentTripsButton" alt="present trips button">PRESENT</button>
+					<button class="trip-button" id="pastTripsButton" alt="past trips button">PAST</button>
+					<button class="trip-button" id="pendingTripsButton" alt="pending trips button">PENDING</button>
+				</nav>
+				<section class="total-spent-section" id="totalSpentPerYear"></section>
 			</section>
-			<section class="new-trips-container">
-				<aside class="new-trips-form-section">
-					<form class="new-trip-input-form" id="newTripSubmitButton">
-						<p>WANT TO BOOK ANOTHER TRIP?</p>
-						<label for="date">Select Date:
-							<input type="date" id="dateField" class="form-calendar-field" required>
-						</label>
-						<label for="number">Enter Number of Days:</label>
-						<input type="number" placeholder="Enter Duration" class="input-text" id="durationField" required>
-						<label for="number">Enter Number of Travelers:</label>
-						<input type="number" placeholder="Enter Number of Travelers" class="input-text" id="travelersField" required>
-						<label for="choose destination">Choose Destination:</label>
-						<select name="Destination" class="destination-dropdown" id="destinationDropdown">
-							<option disabled selected>Select a Destination</option>
-						</select>
-						<input type="submit" value="Submit" class="submit-button">
-					</form>
-					<section class="trip-estimate" id="tripEstimate"></section>
-				</aside>
-    	</section>
-	</section>
+			<section class="dashboard-container">
+				<section class="trips-container">
+					<ul class="trips-data-section" id="allTripsData">ALL TRIPS
+					</ul>
+					<ul  class="trips-data-section hidden" id="upcomingTripsData">UPCOMING TRIPS
+					</ul>
+					<ul class="trips-data-section hidden" id="presentTripsData">PRESENT TRIPS
+					</ul>
+					<ul class="trips-data-section hidden" id="pastTripsData">PAST TRIPS
+					</ul>
+					<ul class="trips-data-section hidden" id="pendingTripsData">PENDING TRIPS
+					</ul>
+				</section>
+				<section class="new-trips-container">
+					<aside class="new-trips-form-section">
+						<form class="new-trip-input-form" id="newTripSubmitButton">
+							<p>WANT TO BOOK ANOTHER TRIP?</p>
+							<label for="date">Select Date:
+								<input type="date" id="dateField" class="form-calendar-field" required>
+							</label>
+							<label for="number">Enter Number of Days:</label>
+							<input type="number" placeholder="Enter Duration" class="input-text" id="durationField" required>
+							<label for="number">Enter Number of Travelers:</label>
+							<input type="number" placeholder="Enter Number of Travelers" class="input-text" id="travelersField" required>
+							<label for="choose destination">Choose Destination:</label>
+							<select name="Destination" class="destination-dropdown" id="destinationDropdown">
+								<option disabled selected>Select a Destination</option>
+							</select>
+							<input type="submit" value="Submit" class="submit-button">
+						</form>
+						<section class="trip-estimate" id="tripEstimate"></section>
+					</aside>
+				</section>
+		</section>
+		</main>
   </main>
-  
   
   <!-- Do not include the scripts.js or class files here - it is done by the webpack server -->
   <script src="bundle.js"></script>
