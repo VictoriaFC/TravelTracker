@@ -8,8 +8,16 @@ const fetchAll = (dataType) => {
 
 const fetchOne = (dataType, Id) => {
 	return fetch(`http://localhost:3001/api/v1/${dataType}/${Id}`)
-			.then(response => response.json())
-			.catch(error => console.log(error));
+			.then((response) => {
+				if (!response.ok) {
+					throw new Error("Invalid Username/Password");
+				} else {
+					return response.json()
+				}
+			})
+			.catch(() => {
+				return false
+			});
 }
 
 // fetch POST

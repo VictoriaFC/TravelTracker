@@ -3,17 +3,18 @@
 import './css/styles.css';
 import './images/turing-logo.png'
 import './images/viaVictoria.jpg'
-import TravelerRepository from './TravelerRepository';
+import Traveler from './Traveler';
+// import TravelerRepository from './TravelerRepository';
 import TripRepository from './TripRepository';
 import DestinationRepository from './DestinationRepository';
-import { fetchAll, postData } from './apiCalls';
+import { fetchAll, fetchOne, postData } from './apiCalls';
 import Trip from './Trip';
 
 console.log('This is the JavaScript entry file - your code begins here.');
 
 // ****** global variables ******
 let traveler;
-let travelerRepo;
+// let travelerRepo;
 let tripRepo;
 let destinationRepo;
 
@@ -37,10 +38,9 @@ var pastTripsData = document.getElementById('pastTripsData');
 var pendingTripsData = document.getElementById('pendingTripsData');
 
 window.addEventListener("load", () => {
-	loadData([fetchAll('travelers'), fetchAll('trips'), fetchAll('destinations')])
-
-	loginButton.addEventListener('click', showTravelerPage);
-	signOutButton.addEventListener('click', showLoginPage);
+	// loginButton.addEventListener('click', showTravelerPage);
+	// signOutButton.addEventListener('click', showLoginPage);
+	loginButton.addEventListener("click", attemptLogin)
 
 	newTripSubmitButton.addEventListener('submit', postNewTrip);
 	newTripSubmitButton.addEventListener('change', displayTripEstimate);
@@ -51,11 +51,29 @@ window.addEventListener("load", () => {
 	pendingTripsButton.addEventListener('click', showPendingTrips);
 })
 
-function letTravelerLogin(travelerRepo) {
-	const user = document.getElementById("uname").value;
-	const pass = document.getElementById("psw").value;
-	const splitUserID = user.split('traveler')[1]
 
+function attemptLogin(event) {
+	event.preventDefault()
+	const username = document.getElementById("uname").value;
+	const pass = document.getElementById("psw").value;
+	const splitUsername =  username.split('traveler')
+	const userId = parseInt(splitUsername[1])
+	const validInputs = userId !== NaN && pass === "traveler" && splitUsername[0] === ""
+
+	if (!validInputs) {
+		alert("Invalid username/password")
+		return
+	}
+
+	fetchOne('travelers', userId).then((travelerData) => {
+		if (travelerData) {
+			traveler = new Traveler(travelerData)
+			loadData([fetchAll('trips'), fetchAll('destinations')])
+			showTravelerPage()
+		} else {
+			alert("Invalid username/password")
+		}
+	})
 }
 
 function showTravelerPage() {
@@ -69,23 +87,19 @@ function showLoginPage() {
 }
 
 // ****** fetch GET ******
-function loadData(fetchRequests, loadTraveler = true) {
+function loadData(fetchRequests) {
 	Promise.all(fetchRequests)
 	.then(data => {
-		travelerRepo = new TravelerRepository(data[0].travelers);
-		if (loadTraveler) {
-			traveler = travelerRepo.randomTraveler()
-		}
-		tripRepo = new TripRepository(data[1].trips);
-		destinationRepo = new DestinationRepository(data[2].destinations);
+		// travelerRepo = new TravelerRepository(data[0].travelers);
+		tripRepo = new TripRepository(data[0].trips);
+		destinationRepo = new DestinationRepository(data[1].destinations);
 		displayAllTrips();
 		displayUpcomingTrips();
 		displayPresentTrips();
 		displayPastTrips();
 		displayPendingTrips();
 		displayTotalSpentPerYear();
-		displayDestinationDropdown(destinationRepo.destinations);
-		letTravelerLogin();
+		displayDestinationDropdown();
 	})
 } 
 
@@ -209,9 +223,9 @@ const displayTotalSpentPerYear = () => {
 	totalCostField.innerText = `Total Spent on Travel in ${now.getFullYear()}: \n$${totalCost.toFixed(2)}`
 }
 
-function displayDestinationDropdown(destinations) {
+function displayDestinationDropdown() {
 	let destinationDropdown = document.getElementById('destinationDropdown');
-	destinations.forEach(destination => {
+	destinationRepo.destinations.forEach(destination => {
 			let newOption = new Option(destination.destination, destination.id)
 			destinationDropdown.appendChild(newOption);
 	});
@@ -250,7 +264,7 @@ function postNewTrip(e) {
 	};
 
 	postData('http://localhost:3001/api/v1/trips', newTripData).then(json => {
-		loadData([fetchAll('travelers'), fetchAll('trips'), fetchAll('destinations')], false);
+		loadData([fetchAll('trips'), fetchAll('destinations')]);
 	})
 }
 
