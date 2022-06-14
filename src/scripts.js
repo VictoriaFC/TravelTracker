@@ -14,7 +14,6 @@ console.log('This is the JavaScript entry file - your code begins here.');
 
 // ****** global variables ******
 let traveler;
-// let travelerRepo;
 let tripRepo;
 let destinationRepo;
 
@@ -38,9 +37,8 @@ var pastTripsData = document.getElementById('pastTripsData');
 var pendingTripsData = document.getElementById('pendingTripsData');
 
 window.addEventListener("load", () => {
-	// loginButton.addEventListener('click', showTravelerPage);
-	// signOutButton.addEventListener('click', showLoginPage);
 	loginButton.addEventListener("click", attemptLogin)
+	signOutButton.addEventListener("click", logout)
 
 	newTripSubmitButton.addEventListener('submit', postNewTrip);
 	newTripSubmitButton.addEventListener('change', displayTripEstimate);
@@ -70,6 +68,8 @@ function attemptLogin(event) {
 			traveler = new Traveler(travelerData)
 			loadData([fetchAll('trips'), fetchAll('destinations')])
 			showTravelerPage()
+			document.getElementById("uname").value = "";
+			document.getElementById("psw").value = "";
 		} else {
 			alert("Invalid username/password")
 		}
@@ -81,18 +81,21 @@ function showTravelerPage() {
 	loginMainPage.classList.add('hidden')
 }
 
-function showLoginPage() {
+function logout() {
 	travelerMainPage.classList.add('hidden')
 	loginMainPage.classList.remove('hidden')
+	traveler = undefined 
+	tripRepo = undefined
+	destinationRepo = undefined
 }
 
 // ****** fetch GET ******
 function loadData(fetchRequests) {
 	Promise.all(fetchRequests)
 	.then(data => {
-		// travelerRepo = new TravelerRepository(data[0].travelers);
 		tripRepo = new TripRepository(data[0].trips);
 		destinationRepo = new DestinationRepository(data[1].destinations);
+		showAllTrips()
 		displayAllTrips();
 		displayUpcomingTrips();
 		displayPresentTrips();
@@ -287,7 +290,6 @@ function displayTripEstimate() {
 		status: 'pending',
 		suggestedActivities: []
 	};
-	console.log(newTripData)
 	
 	const checkItOut = Object.values(newTripData)
 	if (checkItOut.includes('') || checkItOut.includes(NaN)) {
@@ -304,4 +306,5 @@ function clearForm() {
 	document.getElementById('durationField').value = '';
 	document.getElementById('travelersField').value = '';
 	document.getElementById('destinationDropdown').selectedIndex = 0;
+	tripEstimate.innerHTML = "";
 }
